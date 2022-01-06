@@ -6,7 +6,11 @@ const LazyScene = dynamic(() => import('./scene'), {
     loading: () => <CircularProgress />
 });
 
-const Layout = ({ children }) => (
+interface Props {
+    
+}
+
+const Layout: React.FC<Props> = ({ children }) => (
     <Container maxWidth="sm" sx={{ height: '100%' }}>
         <LazyScene />
         {children}

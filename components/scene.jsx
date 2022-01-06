@@ -1,10 +1,13 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState, forwardRef } from 'react';
 import * as THREE from 'three';
 import { Container } from '@mui/material';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { CircularProgress } from '@mui/material';
 
-const easeOutCirc: number = x => Math.sqrt(1 - Math.pow(x - 1, 4));
+// const easeOutCirc: number = x => ;
+function easeOutCirc(x) {
+  return Math.sqrt(1 - Math.pow(x - 1, 4));
+}
 
 const Scene = () => {
   const containerRef = useRef();
@@ -25,18 +28,21 @@ const Scene = () => {
   const handleWindowResize = useCallback(() => {
     const { current: container } = containerRef;
     if (container && renderer) {
-      const scW = container.clientWidth;
-      const scH = container.clientHeight;
+      const scW = container['clientWidth'];
+      const scH = container['clientHeight'];
+      
       
       renderer.setSize(scW, scH);
     }
   }, [renderer]);
 
   useEffect(() => {
-    const { current: container } = containerRef;
+    // const { current: container } = containerRef;
+    const container = containerRef.current;
+    
     if (container && !renderer) {
-      const scW = container.clientWidth;
-      const scH = container.clientHeight;
+      const scW = container['clientWidth'];
+      const scH = container['clientHeight'];
       
       const renderer = new THREE.WebGLRenderer({
         antialias: true,
@@ -71,7 +77,7 @@ const Scene = () => {
       setControls(controls);
 
       // TODO add obj
-      const geometry = new THREE.BoxGeometry(1, 1, 1);
+      const geometry = new THREE.BoxGeometry(5, 5, 5);
       const _material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
       const cube = new THREE.Mesh(geometry, _material);
       scene.add(cube)
@@ -99,7 +105,7 @@ const Scene = () => {
       }
       requestAnimationFrame(animate);
       setLoading(false);
-
+      
       return () => {
         console.log('unmount');
         cancelAnimationFrame(req);
@@ -107,7 +113,6 @@ const Scene = () => {
       }
     }
   }, []);
-  
   useEffect(() => {
     window.addEventListener('resize', handleWindowResize, false);
     return () => {
@@ -116,9 +121,7 @@ const Scene = () => {
   }, [renderer, handleWindowResize]);
 
   return (
-    <Container ref={containerRef} maxWidth="sm" sx={{ height: '100%' }}>
-      {loading && <CircularProgress />}
-    </Container>
+    <Container ref={containerRef} maxWidth="sm" sx={{ height: '100%' }}/>
   );
 };
 
