@@ -9,6 +9,7 @@ import * as THREE from "three";
 import { Container } from "@mui/material";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { CircularProgress } from "@mui/material";
+import { loaderFBXModel, loadGLTFModel } from "@lib/model";
 
 // const easeOutCirc: number = x => ;
 function easeOutCirc(x) {
@@ -36,11 +37,10 @@ const Scene = () => {
     if (container && renderer) {
       const scW = container["clientWidth"];
       const scH = container["clientHeight"];
-
       renderer.setSize(scW, scH);
     }
   }, [renderer]);
-
+  handleWindowResize();
   useEffect(() => {
     // const { current: container } = containerRef;
     const container = containerRef.current;
@@ -82,10 +82,18 @@ const Scene = () => {
       setControls(controls);
 
       // TODO add obj
-      const geometry = new THREE.BoxGeometry(5, 5, 5);
-      const _material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-      const cube = new THREE.Mesh(geometry, _material);
-      scene.add(cube);
+      // const geometry = new THREE.BoxGeometry(5, 5, 5);
+      // const _material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+      // const cube = new THREE.Mesh(geometry, _material);
+      // scene.add(cube);
+      loaderFBXModel(scene, "/among.FBX", {
+        receiveShadow: false,
+        castShadow: false,
+      });
+      // loadGLTFModel(scene, "/dog.glb", {
+      //   receiveShadow: false,
+      //   castShadow: false,
+      // });
 
       let req = null;
       let frame = 0;
@@ -127,7 +135,13 @@ const Scene = () => {
     };
   }, [renderer, handleWindowResize]);
 
-  return <Container ref={containerRef} maxWidth="sm" sx={{ height: "100%" }} />;
+  return (
+    <Container
+      ref={containerRef}
+      maxWidth="sm"
+      sx={{ height: "100%", position: "fixed" }}
+    />
+  );
 };
 
 export default Scene;
