@@ -1,8 +1,14 @@
-import { useCallback, useEffect, useRef, useState, forwardRef } from 'react';
-import * as THREE from 'three';
-import { Container } from '@mui/material';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-import { CircularProgress } from '@mui/material';
+import React, {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  forwardRef,
+} from "react";
+import * as THREE from "three";
+import { Container } from "@mui/material";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+import { CircularProgress } from "@mui/material";
 
 // const easeOutCirc: number = x => ;
 function easeOutCirc(x) {
@@ -28,10 +34,9 @@ const Scene = () => {
   const handleWindowResize = useCallback(() => {
     const { current: container } = containerRef;
     if (container && renderer) {
-      const scW = container['clientWidth'];
-      const scH = container['clientHeight'];
-      
-      
+      const scW = container["clientWidth"];
+      const scH = container["clientHeight"];
+
       renderer.setSize(scW, scH);
     }
   }, [renderer]);
@@ -39,14 +44,14 @@ const Scene = () => {
   useEffect(() => {
     // const { current: container } = containerRef;
     const container = containerRef.current;
-    
+
     if (container && !renderer) {
-      const scW = container['clientWidth'];
-      const scH = container['clientHeight'];
-      
+      const scW = container["clientWidth"];
+      const scH = container["clientHeight"];
+
       const renderer = new THREE.WebGLRenderer({
         antialias: true,
-        alpha: true
+        alpha: true,
       });
       renderer.setPixelRatio(window.devicePixelRatio);
       renderer.setSize(scW, scH);
@@ -80,13 +85,13 @@ const Scene = () => {
       const geometry = new THREE.BoxGeometry(5, 5, 5);
       const _material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
       const cube = new THREE.Mesh(geometry, _material);
-      scene.add(cube)
+      scene.add(cube);
 
       let req = null;
       let frame = 0;
       const animate = () => {
         req = requestAnimationFrame(animate);
-        
+
         frame = frame <= 100 ? frame + 1 : frame;
 
         if (frame <= 100) {
@@ -94,35 +99,35 @@ const Scene = () => {
           const rotSpeed = -easeOutCirc(frame / 120) * Math.PI * 20;
 
           camera.position.y = 10;
-          camera.position.x = p.x * Math.cos(rotSpeed) + p.z * Math.sin(rotSpeed);
-          camera.position.z = p.z * Math.cos(rotSpeed) - p.x * Math.sin(rotSpeed);
+          camera.position.x =
+            p.x * Math.cos(rotSpeed) + p.z * Math.sin(rotSpeed);
+          camera.position.z =
+            p.z * Math.cos(rotSpeed) - p.x * Math.sin(rotSpeed);
           camera.lookAt(target);
         } else {
           controls.update();
         }
 
         renderer.render(scene, camera);
-      }
+      };
       requestAnimationFrame(animate);
       setLoading(false);
-      
+
       return () => {
-        console.log('unmount');
+        console.log("unmount");
         cancelAnimationFrame(req);
         renderer.dispose();
-      }
+      };
     }
   }, []);
   useEffect(() => {
-    window.addEventListener('resize', handleWindowResize, false);
+    window.addEventListener("resize", handleWindowResize, false);
     return () => {
-      window.addEventListener('resize', handleWindowResize, false);
-    }
+      window.addEventListener("resize", handleWindowResize, false);
+    };
   }, [renderer, handleWindowResize]);
 
-  return (
-    <Container ref={containerRef} maxWidth="sm" sx={{ height: '100%' }}/>
-  );
+  return <Container ref={containerRef} maxWidth="sm" sx={{ height: "100%" }} />;
 };
 
 export default Scene;

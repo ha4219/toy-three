@@ -1,6 +1,5 @@
-import { forwardRef } from "react";
-import { Box, CircularProgress  } from '@mui/material';
-
+import React, { forwardRef } from "react";
+import { Box, CircularProgress } from "@mui/material";
 
 // export const ObjLoading: React.FC = () => (
 //     <CircularProgress />
@@ -15,9 +14,7 @@ import { Box, CircularProgress  } from '@mui/material';
 // ));
 
 const Loader = () => {
-    return (
-        <div></div>
-    )
+  return <div></div>;
 };
 
 export default Loader;
