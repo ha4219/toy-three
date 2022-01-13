@@ -1,6 +1,7 @@
+import { NextPage } from 'next';
 import Layout from '../components/layout';
 
-const Nemo = () => {
+const Nemo: NextPage = () => {
     return (
         <Layout>
             <div>content</div>
