@@ -2,8 +2,6 @@ import {
   Box,
   Container,
   Menu,
-  Tab,
-  Tabs,
   Button,
   MenuItem,
   AppBar,
@@ -23,8 +21,8 @@ const settings: string[] = ["Profile", "Account", "Dashboard", "Logout"];
 const Navbar = () => {
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
-  const [selectedNavIndex, setSelectedNavIndex] = useState(0);
-  const [selectedUserIndex, setSelectedUserIndex] = useState(0);
+  const [selectedNavIndex, setSelectedNavIndex] = useState(-1);
+  const [selectedUserIndex, setSelectedUserIndex] = useState(-1);
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -44,6 +42,7 @@ const Navbar = () => {
     ) => {
       handleCloseNavMenu();
       setSelectedNavIndex(index);
+      setSelectedUserIndex(-1);
   }, []);
 
   const handleCloseUserMenu = () => {
@@ -55,9 +54,9 @@ const Navbar = () => {
       event: React.MouseEvent<HTMLElement>,
       index: number,
     ) => {
-      console.log(selectedUserIndex , event, index);
       setSelectedUserIndex(index);
       handleCloseUserMenu();
+      setSelectedNavIndex(-1);
     },
   [selectedUserIndex]);
 
