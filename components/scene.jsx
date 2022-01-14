@@ -35,8 +35,10 @@ const Scene = () => {
   const handleWindowResize = useCallback(() => {
     const { current: container } = containerRef;
     if (container && renderer) {
-      const scW = container["clientWidth"];
-      const scH = container["clientHeight"];
+      // const scW = container["clientWidth"];
+      // const scH = container["clientHeight"];
+      const scW = window.innerWidth;
+      const scH = window.innerHeight;
       renderer.setSize(scW, scH);
     }
   }, [renderer]);
@@ -46,8 +48,10 @@ const Scene = () => {
     const container = containerRef.current;
 
     if (container && !renderer) {
-      const scW = container["clientWidth"];
-      const scH = container["clientHeight"];
+      // const scW = container["clientWidth"];
+      // const scH = container["clientHeight"];
+      const scW = window.innerWidth;
+      const scH = window.innerHeight;
 
       const renderer = new THREE.WebGLRenderer({
         antialias: true,
@@ -55,7 +59,7 @@ const Scene = () => {
       });
       renderer.setPixelRatio(window.devicePixelRatio);
       renderer.setSize(scW, scH);
-      renderer.setClearColor(0x000000, 0);
+      // renderer.setClearColor(0x000000, 0);
       renderer.outputEncoding = THREE.sRGBEncoding;
       container.appendChild(renderer.domElement);
       setRenderer(renderer);
@@ -86,14 +90,14 @@ const Scene = () => {
       // const _material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
       // const cube = new THREE.Mesh(geometry, _material);
       // scene.add(cube);
-      loaderFBXModel(scene, "/among.FBX", {
-        receiveShadow: false,
-        castShadow: false,
-      });
-      // loadGLTFModel(scene, "/dog.glb", {
+      // loaderFBXModel(scene, "/iron.FBX", {
       //   receiveShadow: false,
       //   castShadow: false,
       // });
+      loadGLTFModel(scene, "/scene.gltf", {
+        receiveShadow: false,
+        castShadow: false,
+      });
 
       let req = null;
       let frame = 0;
@@ -139,7 +143,7 @@ const Scene = () => {
     <Container
       ref={containerRef}
       maxWidth="sm"
-      sx={{ height: "100%", position: "fixed" }}
+      sx={{ height: "100%", position: "fixed", top: 0, left: 0,}}
     />
   );
 };

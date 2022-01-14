@@ -6,6 +6,7 @@ import createEmotionCache from "@styles/createEmotionCache";
 import { CssBaseline } from "@mui/material";
 import theme from "@styles/theme";
 import Layout from "@components/layout";
+import Footer from "@components/Footer";
 
 const clientSideEmotionCache = createEmotionCache();
 
@@ -22,6 +23,7 @@ function MyApp(props: {
         <CssBaseline />
         <Layout>
           <Component {...pageProps} />
+          <Footer/>
         </Layout>
       </ThemeProvider>
     </CacheProvider>

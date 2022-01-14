@@ -33,7 +33,6 @@ const Layout: React.FC<Props> = ({ children }) => {
       <Navbar />
       <Drawer></Drawer>
       <Container>
-        <LazyScene />
         {children}
       </Container>
     </Box>
